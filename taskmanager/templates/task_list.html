@@ -1,19 +1,26 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Task List</title>
+  <meta charset="utf-8">
+  <title>Task List</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <h1>My Tasks</h1>
-    <ul>
-        {% for task in tasks %}
-            <li>
-                {{ task.title }} - {% if task.completed %} ✅ Done {% else %} ❌ Pending {% endif %}
-            </li>
-        {% empty %}
-            <li>No tasks yet!</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'add_task' %}">Add Task</a>
+  <h1>My Tasks</h1>
+
+  <ul>
+    {% for task in tasks %}
+      <li>
+        {{ task.title }} –
+        {% if task.completed %}✅ Done{% else %}❌ Pending{% endif %}
+      </li>
+    {% empty %}
+      <li>No tasks yet!</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Link to the Add Task page -->
+  <!--<a href="{% url 'add_task' %}">Add Task</a>-->
 </body>
 </html>
