@@ -4,7 +4,7 @@ from .models import Task
 
 def task_list(request):
     tasks = Task.objects.order_by('-created_at')
-    return render(request, 'Taskly/task_list.html', {'tasks': tasks})
+    return render(request, 'task_list.html', {'tasks': tasks})
 
 @require_http_methods(["POST"])
 def add_task(request):
@@ -12,15 +12,6 @@ def add_task(request):
     if title:
         Task.objects.create(title=title)
     return redirect('task_list')
-
-def edit_task(request, task_id):
-    task = get_object_or_404(Task, id=task_id)
-    if request.method == 'POST':
-        task.title = request.POST.get('title', task.title).strip()
-        task.description = request.POST.get('description', task.description)
-        task.save()
-        return redirect('task_list')
-    return render(request, 'Taskly/edit_task.html', {'task': task})
 
 def toggle_complete(request, task_id):
     task = get_object_or_404(Task, id=task_id)
@@ -32,3 +23,13 @@ def delete_task(request, task_id):
     task = get_object_or_404(Task, id=task_id)
     task.delete()
     return redirect('task_list')
+
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == 'POST':
+        task.title = request.POST.get('title', task.title).strip()
+        task.description = request.POST.get('description', task.description)
+        task.save()
+        return redirect('task_list')
+    return render(request, 'edit_task.html', {'task': task})
+
